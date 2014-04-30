@@ -11,7 +11,7 @@
 	*/
 	var OS = (function() {
 		// constructor
-		function OS(){};
+		function OS(){}
 
 		OS.prototype = new EventEmitter2();
 		OS.prototype.constructor = OS;
@@ -26,7 +26,7 @@
 
 	var Process = (function() {
 		// constructor
-		function Process(){};
+		function Process(){}
 
 		return Process;
 	})();
@@ -40,18 +40,17 @@
 			x_pos = document.all ? window.event.clientX : e.pageX;
 			y_pos = document.all ? window.event.clientY : e.pageY;
 			if (selected !== null) {
-				selected.style.left = (x_pos - x_elem) + 'px';
-				selected.style.top = (y_pos - y_elem) + 'px';
+				selected.setPosition(x_pos - x_elem, y_pos - y_elem);
 			}
 		};
 		document.onmouseup = function() {
 			selected = null;
 		};
 
-		return function(elem){
-			selected = elem;
-			x_elem = x_pos - selected.offsetLeft;
-			y_elem = y_pos - selected.offsetTop;
+		return function(win){
+			selected = win;
+			x_elem = x_pos - selected.element.offsetLeft;
+			y_elem = y_pos - selected.element.offsetTop;
 		};
 	})();
 
@@ -59,42 +58,68 @@
 		var lastPID = 0;
 		var domCache = [];
 		// constructor
-		function Window(){
+		function Window(width, height, x, y){
 			this.pid = lastPID++;
-		};
+			this.width = width || 0;
+			this.height = height || 0;
+			this.x = x || 0;
+			this.y = y || 0;
+		}
 
-		Window.prototype.create = function(width, height, x, y){
+		Window.prototype.create = function(){
+			if(this.element !== undefined) return this;
 			this.element = domCache.length > 0 ? domCache.pop() : document.createElement("div");
 
 			this.element.className = "window";
-			this.element.style.width = width + "px";
-			this.element.style.height = height + "px";
 			this.element.style.display = "block";
+			this.element.style.width = this.width + "px";
+			this.element.style.height = this.height + "px";
+			this.element.style.left = this.x  + "px";
+			this.element.style.top = this.y  + "px";
+
+			var that = this;
 			this.element.onmousedown = function() {
-				drag(this);
+				drag(that);
 				return false;
 			};
-			OS.container.appendChild(this.element);
 
-			if(x !== undefined && y !== undefined) this.setPosition(x, y);
+			OS.container.appendChild(this.element);
+			return this;
+		};
+
+		Window.prototype.setSize = function(width, height){
+			if(this.width != width){
+				this.width = width;
+				this.element.style.width = this.width + "px";
+			}
+			if(this.height != height){
+				this.height = height;
+				this.element.style.height = this.height + "px";
+			}
 			return this;
 		};
 
 		Window.prototype.setPosition = function(x, y){
-			this.element.style.top = x  + "px";
-			this.element.style.left = y  + "px";
+			if(this.x != x){
+				this.x = x;
+				this.element.style.left = this.x  + "px";
+			}
+			if(this.y != y){
+				this.y = y;
+				this.element.style.top = this.y  + "px";
+			}
 			return this;
 		};
 
 		Window.prototype.show = function(){
-			if(this.element.style.display == "block") return;
-			this.element.style.display = "block";
+			if(this.element.style.display != "block")
+				this.element.style.display = "block";
 			return this;
 		};
 
 		Window.prototype.hide = function(){
-			if(this.element.style.display == "none") return;
-			this.element.style.display = "none";
+			if(this.element.style.display != "none")
+				this.element.style.display = "none";
 			return this;
 		};
 
@@ -112,7 +137,7 @@
 
 	var Application = (function() {
 		// constructor
-		function Application(){};
+		function Application(){}
 
 		return Application;
 	})();
@@ -121,7 +146,7 @@
 		// constructor
 		function WindowManager(){
 			this.windows = [];
-		};
+		}
 
 		WindowManager.prototype.addWindow = function(win){
 
