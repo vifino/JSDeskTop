@@ -46,11 +46,13 @@
 			OS.container.appendChild(this.element);
 
 			if(x !== undefined && y !== undefined) this.setPosition(x, y);
+			return this;
 		};
 
 		Window.prototype.setPosition = function(x, y){
 			this.element.style.top = x  + "px";
 			this.element.style.left = y  + "px";
+			return this;
 		};
 
 		Window.prototype.show = function(){
