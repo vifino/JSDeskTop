@@ -38,12 +38,19 @@
 			this.pid = lastPID++;
 		};
 
-		Window.prototype.create = function(width, height){
+		Window.prototype.create = function(width, height, x, y){
 			this.element = document.createElement("div");
 			this.element.className = "window";
 			this.element.style.width = width + "px";
 			this.element.style.height = height + "px";
 			OS.container.appendChild(this.element);
+
+			if(x !== undefined && y !== undefined) this.setPosition(x, y);
+		};
+
+		Window.prototype.setPosition = function(x, y){
+			this.element.style.top = x;
+			this.element.style.left = y;
 		};
 
 		Window.prototype.show = function(){
