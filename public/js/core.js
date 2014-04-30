@@ -13,11 +13,10 @@
 		// constructor
 		function OS(){};
 
-		OS.prototype.onload = function(){
+		OS.prototype = new EventEmitter2();
+		OS.prototype.constructor = OS;
 
-		};
-
-		OS.prototype.onload = function(){
+		OS.prototype.load = function(){
 
 		};
 
