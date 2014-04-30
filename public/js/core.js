@@ -9,29 +9,51 @@
 
 
 	*/
-	function OS(){
+	var OS = (function() {
+		// constructor
+		function OS(){};
 
-	};
+		OS.prototype.onload = function(){
 
-	OS.prototype.onload = function(){
+		};
 
-	};
+		OS.prototype.onload = function(){
 
-	function Process(pid){
+		};
 
-	};
+		return OS;
+	})();
 
-	function Window(pid){
+	var Process = (function() {
+		// constructor
+		function Process(){};
 
-	};
+		return Process;
+	})();
 
-	function Application(pid){
+	var Window = (function() {
+		var lastPID = 0;
+		// constructor
+		function Window(){
+			this.pid = lastPID++;
+		};
 
-	};
+		return Window;
+	})();
 
-	function WindowManager(pid){
+	var Application = (function() {
+		// constructor
+		function Application(){};
 
-	};
+		return Application;
+	})();
+
+	var WindowManager = (function() {
+		// constructor
+		function WindowManager(){};
+
+		return WindowManager;
+	})();
 
 	exports.OS = new OS(); // Singleton
 	exports.OS.Process = Process;
