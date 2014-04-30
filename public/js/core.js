@@ -57,10 +57,12 @@
 
 		Window.prototype.show = function(){
 			this.element.style.display = "block"
+			return this;
 		};
 
 		Window.prototype.hide = function(){
 			this.element.style.display = "none"
+			return this;
 		};
 
 		return Window;
