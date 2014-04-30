@@ -31,6 +31,30 @@
 		return Process;
 	})();
 
+	var drag = (function() {
+		var selected = null, // Object of the element to be moved
+			x_pos = 0, y_pos = 0, // Stores x & y coordinates of the mouse pointer
+			x_elem = 0, y_elem = 0; // Stores top, left values (edge) of the element
+
+		document.onmousemove = function (e) {
+			x_pos = document.all ? window.event.clientX : e.pageX;
+			y_pos = document.all ? window.event.clientY : e.pageY;
+			if (selected !== null) {
+				selected.style.left = (x_pos - x_elem) + 'px';
+				selected.style.top = (y_pos - y_elem) + 'px';
+			}
+		};
+		document.onmouseup = function() {
+			selected = null;
+		};
+
+		return function(elem){
+			selected = elem;
+			x_elem = x_pos - selected.offsetLeft;
+			y_elem = y_pos - selected.offsetTop;
+		};
+	})();
+
 	var Window = (function() {
 		var lastPID = 0;
 		// constructor
@@ -43,6 +67,10 @@
 			this.element.className = "window";
 			this.element.style.width = width + "px";
 			this.element.style.height = height + "px";
+			this.element.onmousedown = function() {
+				drag(this);
+				return false;
+			};
 			OS.container.appendChild(this.element);
 
 			if(x !== undefined && y !== undefined) this.setPosition(x, y);
