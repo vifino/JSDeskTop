@@ -21,7 +21,7 @@
 			console.log(this.container);
 		};
 
-		return new OS;
+		return new OS();
 	})();
 
 	var Process = (function() {
@@ -57,6 +57,7 @@
 
 	var Window = (function() {
 		var lastPID = 0;
+		var domCache = [];
 		// constructor
 		function Window(){
 			this.pid = lastPID++;
@@ -95,6 +96,15 @@
 			return this;
 		};
 
+		Window.prototype.destroy = function(){
+			this.hide();
+			domCache.push(this.element);
+			while(domCache.length > 10){ // Limit cache size to 10
+				var elem = domCache.pop();
+				elem.parentNode.removeChild(elem);
+			}
+		};
+
 		return Window;
 	})();
 
@@ -107,7 +117,17 @@
 
 	var WindowManager = (function() {
 		// constructor
-		function WindowManager(){};
+		function WindowManager(){
+			this.windows = [];
+		};
+
+		WindowManager.prototype.addWindow = function(win){
+
+		};
+
+		WindowManager.prototype.removeWindow = function(win){
+
+		};
 
 		return WindowManager;
 	})();
