@@ -49,8 +49,8 @@
 		};
 
 		Window.prototype.setPosition = function(x, y){
-			this.element.style.top = x;
-			this.element.style.left = y;
+			this.element.style.top = x  + "px";
+			this.element.style.left = y  + "px";
 		};
 
 		Window.prototype.show = function(){
