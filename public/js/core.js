@@ -17,10 +17,11 @@
 		OS.prototype.constructor = OS;
 
 		OS.prototype.load = function(){
-
+			this.container = document.getElementById("container");
+			console.log(this.container);
 		};
 
-		return OS;
+		return new OS;
 	})();
 
 	var Process = (function() {
@@ -35,6 +36,22 @@
 		// constructor
 		function Window(){
 			this.pid = lastPID++;
+		};
+
+		Window.prototype.create = function(width, height){
+			this.element = document.createElement("div");
+			this.element.className = "window";
+			this.element.style.width = width + "px";
+			this.element.style.height = height + "px";
+			OS.container.appendChild(this.element);
+		};
+
+		Window.prototype.show = function(){
+
+		};
+
+		Window.prototype.hide = function(){
+
 		};
 
 		return Window;
@@ -54,7 +71,7 @@
 		return WindowManager;
 	})();
 
-	exports.OS = new OS(); // Singleton
+	exports.OS = OS;
 	exports.OS.Process = Process;
 	exports.OS.Window = Window;
 	exports.OS.Application = Application;
