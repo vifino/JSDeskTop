@@ -69,6 +69,7 @@
 			this.element.className = "window";
 			this.element.style.width = width + "px";
 			this.element.style.height = height + "px";
+			this.element.style.display = "block";
 			this.element.onmousedown = function() {
 				drag(this);
 				return false;
