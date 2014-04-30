@@ -56,11 +56,11 @@
 		};
 
 		Window.prototype.show = function(){
-
+			this.element.style.display = "block"
 		};
 
 		Window.prototype.hide = function(){
-
+			this.element.style.display = "none"
 		};
 
 		return Window;
