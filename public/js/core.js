@@ -64,7 +64,8 @@
 		};
 
 		Window.prototype.create = function(width, height, x, y){
-			this.element = document.createElement("div");
+			this.element = domCache.length > 0 ? domCache.pop() : document.createElement("div");
+
 			this.element.className = "window";
 			this.element.style.width = width + "px";
 			this.element.style.height = height + "px";
