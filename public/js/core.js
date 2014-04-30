@@ -56,12 +56,14 @@
 		};
 
 		Window.prototype.show = function(){
-			this.element.style.display = "block"
+			if(this.element.style.display == "block") return;
+			this.element.style.display = "block";
 			return this;
 		};
 
 		Window.prototype.hide = function(){
-			this.element.style.display = "none"
+			if(this.element.style.display == "none") return;
+			this.element.style.display = "none";
 			return this;
 		};
 
