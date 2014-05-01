@@ -73,9 +73,9 @@
 		Button.prototype = new Component();
 
 		return {
-			Component = Component,
-			Button = Button,
-			HTML = HTML
+			Component: Component,
+			Button: Button,
+			HTML: HTML
 		};
 	});
 
