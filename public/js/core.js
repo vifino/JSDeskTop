@@ -18,7 +18,6 @@
 
 		OS.prototype.load = function(){
 			this.container = document.getElementById("container");
-			console.log(this.container);
 		};
 
 		return new OS();
@@ -58,15 +57,20 @@
 		function Component(){
 			this.element = document.createElement("div"); // TODO: Add caching
 		}
-
-		Component.prototype.destory = function(){
+		Component.prototype.destroy = function(){
 			if(this.window) this.window.removeComponent(this);
 		};
 
-		function HTML(){
+		function HTML(){}
+		HTML.prototype = new Component();
+		HTML.prototype.html = function(html){
+			this.element.innerHTML = html;
+		};
+
+		function Button(){
 
 		}
-		HTML.prototype = new Component();
+		Button.prototype = new Component();
 
 		return {
 			Component = Component,
