@@ -54,6 +54,27 @@
 		};
 	})();
 
+	var ui = (function(){
+		function Component(){
+			this.element = document.createElement("div"); // TODO: Add caching
+		}
+
+		Component.prototype.destory = function(){
+			if(this.window) this.window.removeComponent(this);
+		};
+
+		function HTML(){
+
+		}
+		HTML.prototype = new Component();
+
+		return {
+			Component = Component,
+			Button = Button,
+			HTML = HTML
+		};
+	});
+
 	var Window = (function() {
 		var lastPID = 0;
 		var domCache = [];
@@ -64,6 +85,7 @@
 			this.height = height || 0;
 			this.x = x || 0;
 			this.y = y || 0;
+			this.components = [];
 		}
 
 		Window.prototype.create = function(){
@@ -132,6 +154,16 @@
 			}
 		};
 
+		Window.prototype.addComponent = function(comp){
+			this.components.push(comp);
+			return this;
+		};
+
+		Window.prototype.removeComponent = function(comp){
+			this.components.splice(this.components.indexOf(comp), 1);
+			return this;
+		};
+
 		return Window;
 	})();
 
@@ -160,6 +192,7 @@
 	})();
 
 	exports.OS = OS;
+	exports.OS.ui = ui;
 	exports.OS.Process = Process;
 	exports.OS.Window = Window;
 	exports.OS.Application = Application;
